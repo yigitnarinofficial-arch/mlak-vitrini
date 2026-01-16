@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Yiğit Narin | Lüks Konut & Yatırım</title>
+    <meta name="description" content="Ankara Lüks Konut ve Ticari Gayrimenkul Yatırım Danışmanlığı">
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root { --navy: #001f44; --gold: #c5a059; --gold-light: #e5c585; --bg: #f5f7fa; }
+        * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        body { margin: 0; font-family: 'Montserrat', sans-serif; background: var(--bg); color: #333; padding-bottom: 90px; }
+
+        /* HERO HEADER */
+        header {
+            background: linear-gradient(180deg, rgba(0,31,68,0.95) 0%, rgba(0,42,92,0.85) 100%), 
+                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80');
+            background-size: cover; background-position: center;
+            color: white; padding: 70px 20px 90px; text-align: center;
+            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); overflow: hidden;
+        }
+        .profile-img {
+            width: 140px; height: 140px; border-radius: 50%; border: 4px solid var(--gold);
+            object-fit: cover; box-shadow: 0 0 30px rgba(197, 160, 89, 0.4);
+            margin-bottom: 15px; background: #fff;
+        }
+        h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 0; letter-spacing: -1px; }
+        .subtitle { font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-light); margin-top: 5px; }
+
+        .socials { margin-top: 20px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .soc-btn { 
+            width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center; color: white; transition: 0.3s; text-decoration: none; font-size: 1.1rem;
+        }
+        .soc-btn:hover { background: var(--gold); transform: translateY(-3px); border-color: var(--gold); }
+
+        .status-badge {
+            display: inline-block; margin-top: 15px; padding: 8px 20px; border-radius: 20px;
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 1px;
+            background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+        .status-badge.loading { background: rgba(255, 193, 7, 0.2); color: #ffc107; border-color: rgba(255, 193, 7, 0.3); }
+        .status-badge.error { background: rgba(220, 53, 69, 0.2); color: #dc3545; border-color: rgba(220, 53, 69, 0.3); }
+
+        .section-container { margin-top: -50px; padding-bottom: 20px; position: relative; z-index: 5; }
+        .section-header { padding: 0 25px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--navy); margin: 0; background: white; padding: 8px 20px; border-radius: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .scroll-hint { font-size: 0.8rem; color: #666; display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.8); padding: 5px 10px; border-radius: 20px;}
+
+        .horizontal-scroll {
+            display: flex; overflow-x: auto; gap: 15px; padding: 10px 20px 30px; 
+            scroll-snap-type: x mandatory; scrollbar-width: none;
+        }
+        .horizontal-scroll::-webkit-scrollbar { display: none; }
+
+        .card {
+            flex: 0 0 280px; scroll-snap-align: center; background: white; border-radius: 16px; overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s; position: relative;
+            display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.02);
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+
+        .card-img-wrap { height: 190px; position: relative; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-img { width: 100%; height: 100%; object-fit: cover; }
+        .price-badge {
+            position: absolute; bottom: 10px; right: 10px; background: rgba(0, 31, 68, 0.95);
+            color: var(--gold); padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 0.9rem;
+            backdrop-filter: blur(4px); box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .type-badge {
+            position: absolute; top: 10px; left: 10px; background: rgba(255, 255, 255, 0.95);
+            color: var(--navy); padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 0.75rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .card-body { padding: 18px; display: flex; flex-direction: column; flex-grow: 1; }
+        .card-title { font-size: 1rem; font-weight: 600; margin-bottom: 8px; color: #333; line-height: 1.4; height: 44px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .card-loc { font-size: 0.85rem; color: #666; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+        .card-specs { display: flex; gap: 12px; margin-bottom: 15px; flex-wrap: wrap; }
+        .spec-item { font-size: 0.8rem; color: #888; display: flex; align-items: center; gap: 4px; }
+
+        .btn-inspect {
+            margin-top: auto; display: block; text-align: center; background: #f0f2f5; color: var(--navy);
+            padding: 12px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; width: 100%; transition: 0.2s;
+            text-decoration: none;
+        }
+        .btn-inspect:hover { background: var(--navy); color: white; }
+
+        .mobile-nav {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 400px; background: rgba(12, 30, 53, 0.95);
+            padding: 10px; border-radius: 50px; display: flex; justify-content: space-between;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4); z-index: 999; backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .nav-btn {
+            flex: 1; padding: 12px; border-radius: 40px; text-align: center; color: white;
+            font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+
+        footer { text-align: center; padding: 40px 20px 100px; color: #999; font-size: 0.8rem; }
+        .loader { width: 100%; text-align: center; padding: 60px 20px; color: #888; }
+        .refresh-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 100;
+            background: white; color: var(--navy); border: none; border-radius: 50%;
+            width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15); cursor: pointer; transition: 0.3s;
+        }
+        .refresh-btn:hover { transform: rotate(180deg); background: var(--gold); color: white; }
+    </style>
+</head>
+<body>
+
+    <button class="refresh-btn" onclick="location.reload()" title="Yenile">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+
+    <header>
+        <img src="https://media.licdn.com/dms/image/v2/D4D03AQE-j03q-3iNqA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1718222627446?e=1741824000&v=beta&t=7u_Xy1xS3J-xJzQWw_XyX" 
+             class="profile-img" 
+             onerror="this.src='https://ui-avatars.com/api/?name=Yiğit+Narin&background=002a5c&color=fff&size=200'">
+        
+        <h1>YİĞİT NARİN</h1>
+        <div class="subtitle">Lüks Konut & Yatırım Danışmanı</div>
+
+        <div class="socials">
+            <a href="https://instagram.com" class="soc-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://linkedin.com/in/yigit-narin" class="soc-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://facebook.com" class="soc-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="mailto:yigitnarinofficial@gmail.com" class="soc-btn" title="E-posta"><i class="far fa-envelope"></i></a>
+        </div>
+
+        <div id="status-badge" class="status-badge loading">
+            <i class="fas fa-circle-notch fa-spin"></i> Veriler Güncelleniyor...
+        </div>
+    </header>
+
+    <div class="section-container">
+        <div class="section-header">
+            <h2 class="section-title">Portföy Vitrini</h2>
+            <div class="scroll-hint">Kaydır <i class="fas fa-chevron-right"></i></div>
+        </div>
+
+        <div id="listing-container" class="horizontal-scroll">
+            <div class="loader">
+                <i class="fas fa-circle-notch fa-spin fa-2x"></i><br><br>
+                Portföy yükleniyor...
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Coldwell Banker VIP Gayrimenkul</p>
+        <p style="color:var(--gold); font-weight:bold;">Powered by NexaDigital</p>
+        <p style="font-size:0.7rem; margin-top:10px;" id="update-time"></p>
+    </footer>
+
+    <div class="mobile-nav">
+        <a href="https://wa.me/905324514008" class="nav-btn" style="background:#25D366; margin-right:5px;">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="tel:+905324514008" class="nav-btn" style="background:white; color:var(--navy); margin-left:5px;">
+            <i class="fas fa-phone"></i> Ara
+        </a>
+    </div>
+
+    <script>
+        // ========================================
+        // NEXADIGITAL BACKEND CONNECTION
+        // ========================================
+
+        const CONFIG = {
+            apiUrl: "/api/listings",
+            fallbackUrl: "https://www.cb.com.tr/danismanlar/riza-lutfi-16801"
+        };
+
+        const STATIC_LISTINGS = [
+            {
+                title: "Coldwell Banker VIP Portföyleri",
+                price: "Fiyat Sorunuz",
+                loc: "Ankara",
+                type: "Portföy",
+                rooms: "4+1",
+                area: "Brüt 200 m²",
+                img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80",
+                link: CONFIG.fallbackUrl
+            }
+        ];
+
+        class UIController {
+            constructor() {
+                this.container = document.getElementById('listing-container');
+                this.statusBadge = document.getElementById('status-badge');
+                this.updateTime = document.getElementById('update-time');
+            }
+
+            showLoading() {
+                this.updateStatus('loading', '<i class="fas fa-circle-notch fa-spin"></i> Veriler Güncelleniyor...');
+            }
+
+            showSuccess(count) {
+                this.updateStatus('', `<i class="fas fa-check-circle"></i> ${count} Aktif İlan Yayında`);
+                this.updateTime.textContent = `NexaDigital AI | ${new Date().toLocaleString('tr-TR')}`;
+            }
+
+            showError() {
+                this.updateStatus('error', '<i class="fas fa-wifi"></i> Canlı Bağlantı Kurulamadı');
+                this.updateTime.textContent = `Offline Mod | ${new Date().toLocaleString('tr-TR')}`;
+            }
+
+            updateStatus(className, text) {
+                this.statusBadge.className = `status-badge ${className}`;
+                this.statusBadge.innerHTML = text;
+            }
+
+            clearContainer() {
+                this.container.innerHTML = '';
+            }
+
+            renderCard(listing) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                const specs = [];
+                if (listing.rooms) specs.push(`<span class="spec-item"><i class="fas fa-bed"></i> ${listing.rooms}</span>`);
+                if (listing.area) specs.push(`<span class="spec-item"><i class="fas fa-ruler-combined"></i> ${listing.area}</span>`);
+                
+                card.innerHTML = `
+                    <div class="card-img-wrap">
+                        <img src="${listing.img}" class="card-img" loading="lazy" alt="${listing.title}" onerror="this.src='https://via.placeholder.com/400x300'">
+                        ${listing.type ? `<div class="type-badge">${listing.type}</div>` : ''}
+                        <div class="price-badge">${listing.price}</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">${listing.title}</div>
+                        <div class="card-loc"><i class="fas fa-map-marker-alt" style="color:#c5a059"></i> ${listing.loc}</div>
+                        ${specs.length > 0 ? `<div class="card-specs">${specs.join('')}</div>` : ''}
+                        <a href="${listing.link}" target="_blank" class="btn-inspect">İlanı İncele</a>
+                    </div>
+                `;
+                
+                this.container.appendChild(card);
+            }
+        }
+
+        async function initApp() {
+            const ui = new UIController();
+            ui.showLoading();
+
+            try {
+                // Python backend'e istek atıyoruz
+                const response = await fetch(CONFIG.apiUrl);
+                const json = await response.json();
+
+                if (json.success && json.data.length > 0) {
+                    ui.clearContainer();
+                    json.data.forEach(item => ui.renderCard(item));
+                    ui.showSuccess(json.data.length);
+                } else {
+                    throw new Error('Veri boş');
+                }
+
+            } catch (error) {
+                console.warn('Backend hatası:', error);
+                ui.clearContainer();
+                STATIC_LISTINGS.forEach(item => ui.renderCard(item));
+                ui.showError();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
